@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para el amor de mi vida ❤️</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #fff;
+}
+
+.card {
+  background: rgba(0,0,0,0.35);
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  width: 95%;
+  max-width: 700px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+}
+
+p {
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  line-height: 1.4;
+  margin: 8px 0;
+}
+
+.inicio-btn {
+  margin: 10px auto;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 30px;
+  background: #ff2d55;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.historia {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.foto-container {
+  width: 100%;
+  flex: 1;
+  max-height: 45vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 15px;
+  background: rgba(0,0,0,0.15);
+  margin: 10px 0;
+  z-index: 5;
+  touch-action: pan-y;
+}
+
+.foto-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.mensaje {
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  min-height: 60px;
+  padding: 5px;
+}
+
+/* Botón lateral */
+.btn-siguiente {
+  position: absolute;
+  right: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: radial-gradient(circle at top left, #ff7a8a, #ff2d55);
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Corazones y TE AMO */
+.heart, .love-text {
+  position: absolute;
+  bottom: -20px;
+  animation: floatUp linear forwards;
+  opacity: 0.9;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.heart { font-size: 20px; }
+.love-text { font-size: 16px; font-weight: bold; text-shadow: 0 0 5px rgba(0,0,0,0.4); }
+
+@keyframes floatUp {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to { transform: translateY(-110vh) scale(1.3); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Música -->
+<audio id="musica" src="musica.mp3" loop></audio>
+
+<div class="card">
+  <div>
+    <h1>FELIZ DIA DEL AMOR... AL AMOR DE MI VIDA❤️</h1>
+    <p>
+      💖Que el mundo y yo te queremos de veras, pero yo siempre un poquito más que el mundo💖
+    </p>
+  </div>
+
+  <button class="inicio-btn" id="btnInicio" onclick="iniciarHistoria()">Ver nuestra historia 💕</button>
+
+  <div id="historia" class="historia">
+    <div class="foto-container" id="fotoContainer">
+      <img id="fotoActual" src="" alt="Nuestra historia">
+    </div>
+    <div id="mensaje" class="mensaje"></div>
+
+    <button class="btn-siguiente" onclick="siguiente()">➤❤️</button>
+  </div>
+</div>
+
+<script>
+const historia = [
+  { foto: "foto1.jpeg", texto: "Me gustaría mirar todo de lejos, pero contigo.❤️" },
+  { foto: "foto2.jpg", texto: "Su presencia en mi vida es un regalo que nunca dejaré de apreciar. 💕" },
+  { foto: "foto3.jpeg", texto: "De todas aquellas manos, la suya era la única que me transmitía la vida ✨" },
+  { foto: "foto4.jpg", texto: "Y para estar total, completa, absolutamente enamorado, hay que tener plena conciencia de que uno también es querido, que uno también inspira amor.❤️" },
+  { foto: "foto5.jpeg", texto: "Contigo no tengo necesidad de vivir a la defensiva. Me siento feliz.💖" },
+  { foto: "foto6.jpeg", texto: "💖Fíjese que cuando sonríe se le forman unas comillas en cada extremo de su boca. Esa, su boca, es mi cita favorita.💕" },
+  { foto: "foto7.jpeg", texto: "❤️Te amo como para escuchar tu risa toda la noche y dormir en tu pecho, sin sombras ni fantasmas. Te amo como para no soltarte jamás.❤️" },
+  { foto: "foto8.jpeg", texto: "Y aunque no siempre he entendido mis culpas y mis fracasos, en cambio, sé que en tus brazos el mundo tiene sentido. ❤️" },
+  { foto: "foto9.jpg", texto: "Todos necesitamos alguna vez una cómplice, alguien que nos ayude a usar el corazón.💞" },
+  { foto: "foto10.jpg", texto: "Estábamos, estamos, estaremos juntos. A pedazos, a ratos, a párpados, a sueños.❤️" }
+];
+
+let indice = 0;
+
+function iniciarHistoria() {
+  document.getElementById("btnInicio").style.display = "none";
+  document.getElementById("historia").style.display = "flex";
+  mostrar();
+
+  // Iniciar música (necesita interacción del usuario)
+  const musica = document.getElementById("musica");
+  musica.volume = 0.5;
+  musica.play();
+}
+
+function mostrar() {
+  const img = document.getElementById("fotoActual");
+  img.style.opacity = 0;
+  img.style.transform = "scale(0.95)";
+  setTimeout(() => {
+    img.src = historia[indice].foto;
+    document.getElementById("mensaje").innerText = historia[indice].texto;
+    img.style.opacity = 1;
+    img.style.transform = "scale(1)";
+  }, 200);
+}
+
+function siguiente() {
+  indice++;
+  if (indice >= historia.length) indice = 0;
+  mostrar();
+}
+
+function anterior() {
+  indice--;
+  if (indice < 0) indice = historia.length - 1;
+  mostrar();
+}
+
+/* Swipe en celular */
+let startX = 0;
+const container = document.getElementById("fotoContainer");
+
+container.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+
+container.addEventListener("touchend", e => {
+  const endX = e.changedTouches[0].clientX;
+  const diff = endX - startX;
+
+  if (Math.abs(diff) > 50) {
+    if (diff < 0) siguiente();
+    else anterior();
+  }
+});
+
+/* Corazones */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 7000);
+}, 700);
+
+/* TE AMO */
+setInterval(() => {
+  const text = document.createElement("div");
+  text.className = "love-text";
+  text.innerText = "TE AMO";
+  text.style.left = Math.random() * 100 + "vw";
+  text.style.animationDuration = (5 + Math.random() * 3) + "s";
+  document.body.appendChild(text);
+  setTimeout(() => text.remove(), 8000);
+}, 2000);
+</script>
+
+</body>
+</html>
+
