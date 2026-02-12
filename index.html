@@ -117,6 +117,32 @@ p {
   justify-content: center;
 }
 
+/* Botón de música */
+.music-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 45, 85, 0.9);
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+}
+
+.music-btn:active {
+  transform: scale(0.95);
+}
+
 /* Corazones y TE AMO */
 .heart, .love-text {
   position: absolute;
@@ -140,7 +166,13 @@ p {
 <body>
 
 <!-- Música -->
-<audio id="musica" src="musica.mp3" loop></audio>
+<audio id="musica" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+  <source src="musica.ogg" type="audio/ogg">
+</audio>
+
+<!-- Botón de música -->
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()">🔇</button>
 
 <div class="card">
   <div>
@@ -164,14 +196,14 @@ p {
 
 <script>
 const historia = [
-  { foto: "foto1.JPEG", texto: "Me gustaría mirar todo de lejos, pero contigo.❤️" },
-  { foto: "foto2.JPG", texto: "Su presencia en mi vida es un regalo que nunca dejaré de apreciar. 💕" },
+  { foto: "foto1.jpeg", texto: "Me gustaría mirar todo de lejos, pero contigo.❤️" },
+  { foto: "foto2.jpg", texto: "Su presencia en mi vida es un regalo que nunca dejaré de apreciar. 💕" },
   { foto: "foto3.jpeg", texto: "De todas aquellas manos, la suya era la única que me transmitía la vida ✨" },
   { foto: "foto4.jpg", texto: "Y para estar total, completa, absolutamente enamorado, hay que tener plena conciencia de que uno también es querido, que uno también inspira amor.❤️" },
-  { foto: "foto5.JPEG", texto: "Contigo no tengo necesidad de vivir a la defensiva. Me siento feliz.💖" },
-  { foto: "foto6.JPEG", texto: "💖Fíjese que cuando sonríe se le forman unas comillas en cada extremo de su boca. Esa, su boca, es mi cita favorita.💕" },
-  { foto: "foto7.JPEG", texto: "❤️Te amo como para escuchar tu risa toda la noche y dormir en tu pecho, sin sombras ni fantasmas. Te amo como para no soltarte jamás.❤️" },
-  { foto: "foto8.JPEG", texto: "Y aunque no siempre he entendido mis culpas y mis fracasos, en cambio, sé que en tus brazos el mundo tiene sentido. ❤️" },
+  { foto: "foto5.jpeg", texto: "Contigo no tengo necesidad de vivir a la defensiva. Me siento feliz.💖" },
+  { foto: "foto6.jpeg", texto: "💖Fíjese que cuando sonríe se le forman unas comillas en cada extremo de su boca. Esa, su boca, es mi cita favorita.💕" },
+  { foto: "foto7.jpeg", texto: "❤️Te amo como para escuchar tu risa toda la noche y dormir en tu pecho, sin sombras ni fantasmas. Te amo como para no soltarte jamás.❤️" },
+  { foto: "foto8.jpeg", texto: "Y aunque no siempre he entendido mis culpas y mis fracasos, en cambio, sé que en tus brazos el mundo tiene sentido. ❤️" },
   { foto: "foto9.jpg", texto: "Todos necesitamos alguna vez una cómplice, alguien que nos ayude a usar el corazón.💞" },
   { foto: "foto10.jpg", texto: "Estábamos, estamos, estaremos juntos. A pedazos, a ratos, a párpados, a sueños.❤️" }
 ];
@@ -183,10 +215,33 @@ function iniciarHistoria() {
   document.getElementById("historia").style.display = "flex";
   mostrar();
 
-  // Iniciar música (necesita interacción del usuario)
+  // Intentar reproducir música automáticamente
   const musica = document.getElementById("musica");
+  const btn = document.getElementById("musicBtn");
   musica.volume = 0.5;
-  musica.play();
+  musica.play().then(() => {
+    btn.innerText = "🔊";
+  }).catch(err => {
+    console.log("Música bloqueada por el navegador. Usa el botón para activarla.");
+    btn.innerText = "🔇";
+  });
+}
+
+function toggleMusic() {
+  const musica = document.getElementById("musica");
+  const btn = document.getElementById("musicBtn");
+  
+  if (musica.paused) {
+    musica.volume = 0.5;
+    musica.play().then(() => {
+      btn.innerText = "🔊";
+    }).catch(err => {
+      alert("No se pudo reproducir la música. Verifica que el archivo musica.mp3 exista.");
+    });
+  } else {
+    musica.pause();
+    btn.innerText = "🔇";
+  }
 }
 
 function mostrar() {
@@ -256,4 +311,3 @@ setInterval(() => {
 
 </body>
 </html>
-
